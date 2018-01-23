@@ -10,11 +10,13 @@ import {
   FATAL,
   Level,
 } from './level'
+import chalk from 'chalk'
 
 
 export interface Options {
   level?: Level
   date?: boolean
+  colorful?: boolean
 }
 
 
@@ -26,6 +28,7 @@ export class Logger {
   readonly level = Logger.defaultLevel
   private flags = {
     date: false,
+    colorful: true,
   }
 
 
@@ -36,25 +39,39 @@ export class Logger {
     let {
       level,
       date,
+      colorful,
     } = options
 
     if( level ) this.level = level
     if( date != null ) this.flags.date = date
+    if( colorful != null ) this.flags.colorful = colorful
   }
 
 
   // format a log record.
-  public format(header: string, message: string): string {
+  public format(level: Level, header: string, message: string): string {
+    if( this.flags.colorful ) {
+      message = level.contentChalk.fg(message)
+      message = level.contentChalk.bg(message)
+    }
     return `${header}: ${message}\n`
   }
 
   // format a log record's header.
   public formatHeader(level: Level, date: Date): string {
-    let header = `${level.desc} ${this.name}`
+    let { desc } = level
+    let { name } = this
+    if( this.flags.colorful ) {
+      desc = level.headerChalk.fg(desc)
+      desc = level.headerChalk.bg(desc)
+      name = chalk.gray(name)
+    }
+    let header = `${desc} ${name}`
+    if( !this.flags.date) return `[${header}]`
+
     let dateString = date.toLocaleString()
-    return this.flags.date
-      ? `${dateString} [${header}]`
-      :`[${header}]`
+    if( this.flags.colorful ) dateString = chalk.gray(dateString)
+    return `${dateString} [${header}]`
   }
 
   // format a log record part message according its type.
@@ -89,7 +106,7 @@ export class Logger {
       return text
     })
     let message = messages.join(separator)
-    this.write(this.format(header, message))
+    this.write(this.format(level, header, message))
   }
 
 
