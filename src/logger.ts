@@ -26,7 +26,7 @@ export class Logger {
 
   readonly name: string
   readonly level = Logger.defaultLevel
-  private flags = {
+  readonly flags = {
     date: false,
     colorful: true,
   }
@@ -54,7 +54,7 @@ export class Logger {
       message = level.contentChalk.fg(message)
       message = level.contentChalk.bg(message)
     }
-    return `${header}: ${message}\n`
+    return `${header}: ${message}`
   }
 
   // format a log record's header.
@@ -89,8 +89,9 @@ export class Logger {
         } catch( error ) {
           text = util.inspect(message, false, null)
         }
-        if( text.indexOf('\n') > -1 ) text = '\n' + text
     }
+    if( text.indexOf('\n') > -1 ) text += '\n'
+    else text += ' '
     return text
   }
 
@@ -99,13 +100,18 @@ export class Logger {
   private log(level: Level, ...messages: any[]) {
     if( !level || level.rank < this.level.rank ) return
     let header = this.formatHeader(level, new Date())
-    let separator = ' '
-    messages = messages.map(message=> {
-      let text = this.formatSingleMessage(message)
-      if( separator !== '\n' && text.indexOf('\n') ) separator = '\n'
-      return text
-    })
-    let message = messages.join(separator)
+    let newline = false
+    let message = messages
+      .map(message=> {
+        let text = this.formatSingleMessage(message)
+        if( newline === false && text.endsWith('\n') ) {
+          text = '\n' + text
+          newline = true
+        }
+        return text
+      })
+      .join('')
+    if( !newline && !message.endsWith('\n') ) message += '\n'
     this.write(this.format(level, header, message))
   }
 
