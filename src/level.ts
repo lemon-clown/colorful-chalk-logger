@@ -3,6 +3,13 @@ import { ColorfulChalk } from './colors'
 
 export class Level {
   private static currentRank = 0    // rank increaser
+  private static readonly levels = new Map<string, Level>()
+
+  public static getLevel(levelName: string) {
+    return Level.levels.get(levelName)
+  }
+
+
   readonly rank: number             // level's rank
   readonly name: string             // level's name
   readonly desc: string             // level's description
@@ -19,6 +26,8 @@ export class Level {
     this.desc = desc
     this.headerChalk = headerChalk
     this.contentChalk = contentChalk
+
+    Level.levels.set(this.name, this)
   }
 }
 
