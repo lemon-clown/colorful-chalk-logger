@@ -3,9 +3,16 @@
   "version": "0.1.0",
   "description": "a colorful logger, support control output(format | level) through command-line options.",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "git@github.com:LittleClown/colorful-chalk-logger.git",
   "author": "lemon clown",
   "license": "MIT",
+  "keywords": [
+    "logger",
+    "colorful",
+    "cli options",
+    "customizable"
+  ],
   "devDependencies": {
     "ts-node": "^4.1.0",
     "typescript": "^2.6.2"

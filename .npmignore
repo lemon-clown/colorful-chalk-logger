@@ -1,4 +1,6 @@
 .idea/
 src/
 demo/
-*.ts
+screeshots/
+tsconfig.json
+index.ts
