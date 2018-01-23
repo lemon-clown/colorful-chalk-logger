@@ -1,0 +1,9 @@
+{
+  "name": "colorful-chalk-logger",
+  "version": "0.1.0",
+  "description": "a colorful logger, support control output(format | level) through command-line options.",
+  "main": "dist/index.js",
+  "repository": "git@github.com:LittleClown/colorful-chalk-logger.git",
+  "author": "lemon clown",
+  "license": "MIT"
+}
