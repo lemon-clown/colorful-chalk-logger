@@ -11,8 +11,9 @@ npm install --save colorful-chalk-logger
 
 # cli-options
 * `--log-level <debug|verbose|info|warn|error|fatal>`: index global logger level.
-* `--log-flag <[no-](date|colorful)>`: the prefix `no-` represent negation.
+* `--log-flag <[no-](date|inline|colorful)>`: the prefix `no-` represent negation.
   > - `date`: whether to print date.
+  > - `inline`: each log record output in one line.
   > - `colorful`: whether to print with colors.
 
 

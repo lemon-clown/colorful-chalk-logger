@@ -15,6 +15,7 @@ import {
 export interface Options {
   level?: Level
   date?: boolean
+  inline?: boolean
   colorful?: boolean
   dateChalk?: Chalk | Color
   nameChalk?: Chalk | Color
@@ -34,6 +35,7 @@ export class Logger {
   readonly nameChalk = Logger.defaultNameChalk
   readonly flags = {
     date: false,
+    inline: false,
     colorful: true,
   }
 
@@ -47,6 +49,7 @@ export class Logger {
       dateChalk,
       nameChalk,
       date,
+      inline,
       colorful,
     } = options
 
@@ -62,6 +65,7 @@ export class Logger {
       else this.nameChalk = colorToChalk(nameChalk, true)
     }
     if( date != null ) this.flags.date = date
+    if( inline != null ) this.flags.inline = inline
     if( colorful != null ) this.flags.colorful = colorful
   }
 
@@ -95,20 +99,28 @@ export class Logger {
   // format a log record part message according its type.
   public formatSingleMessage(message: any): string {
     let text: string
+    let { inline } = this.flags
     switch( typeof message ) {
       case 'boolean':
       case 'number':
       case 'string':
         text = '' + message
         break
+      case 'function':
+        text = message.toString()
+        break
       default:
         try {
-          text = JSON.stringify(message, null, 2)
+          if( inline )
+            text = util.inspect(message, false, null)
+          else
+            text = JSON.stringify(message, null, 2)
         } catch( error ) {
           text = util.inspect(message, false, null)
         }
     }
-    if( text.indexOf('\n') > -1 ) text += '\n'
+    if( inline ) text = text.replace(/\n\s*/g, ' ')
+    if( !inline && text.indexOf('\n') > -1 ) text += '\n'
     else text += ' '
     return text
   }
