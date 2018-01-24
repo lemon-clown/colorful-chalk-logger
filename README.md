@@ -1,4 +1,4 @@
-`colorful-chalk-logger` is a colorful logger tool based on ***[chalk](https://github.com/chalk/chalk)***(so you can use a lot of colors) and ***[commander](https://github.com/tj/commander.js)***(so you can use command line parameters to customized the logger's behavior).
+`colorful-chalk-logger` is a colorful logger tool based on [chalk](https://github.com/chalk/chalk)(so you can use a lot of colors) and [commander](https://github.com/tj/commander.js)(so you can use command line parameters to customized the logger's behavior).
 
 # Install
 you can use `colorful-chalk-logger` either in `typescript` or `javascript`.
@@ -36,7 +36,7 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-***![demo1.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo1.1.png)***
+![demo1.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo1.1.png)
 
 ## Custom output format:
 ```typescript
@@ -77,7 +77,7 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-***![demo2.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo2.1.png)***
+![demo2.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo2.1.png)
 
 ```typescript
 // demo/demo3.ts
@@ -102,4 +102,4 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-***![demo3.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo3.1.png)***
+![demo3.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo3.1.png)
