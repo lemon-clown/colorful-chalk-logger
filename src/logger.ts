@@ -1,6 +1,6 @@
 import * as util from 'util'
-
-
+import chalk, { Chalk } from 'chalk'
+import { Color, colorToChalk } from './colors'
 import {
   DEBUG,
   VERBOSE,
@@ -10,22 +10,28 @@ import {
   FATAL,
   Level,
 } from './level'
-import chalk from 'chalk'
 
 
 export interface Options {
   level?: Level
   date?: boolean
   colorful?: boolean
+  dateChalk?: Chalk | Color
+  nameChalk?: Chalk | Color
 }
 
 
 export class Logger {
   private static get defaultLevel() { return WARN }
+  private static get defaultDateChalk() { return chalk.gray.bind(chalk) }
+  private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
+
   private readonly write = (text: string)=> process.stdout.write(text)
 
   readonly name: string
   readonly level = Logger.defaultLevel
+  readonly dateChalk = Logger.defaultDateChalk
+  readonly nameChalk = Logger.defaultNameChalk
   readonly flags = {
     date: false,
     colorful: true,
@@ -38,11 +44,23 @@ export class Logger {
 
     let {
       level,
+      dateChalk,
+      nameChalk,
       date,
       colorful,
     } = options
 
     if( level ) this.level = level
+    if( dateChalk ) {
+      if( typeof dateChalk === 'function' )
+        this.dateChalk = dateChalk
+      else this.dateChalk = colorToChalk(dateChalk, true)
+    }
+    if( nameChalk ) {
+      if( typeof nameChalk === 'function' )
+        this.nameChalk = nameChalk
+      else this.nameChalk = colorToChalk(nameChalk, true)
+    }
     if( date != null ) this.flags.date = date
     if( colorful != null ) this.flags.colorful = colorful
   }
@@ -60,17 +78,17 @@ export class Logger {
   // format a log record's header.
   public formatHeader(level: Level, date: Date): string {
     let { desc } = level
-    let { name } = this
+    let { name, dateChalk, nameChalk } = this
     if( this.flags.colorful ) {
       desc = level.headerChalk.fg(desc)
       desc = level.headerChalk.bg(desc)
-      name = chalk.gray(name)
+      name = nameChalk(name)
     }
     let header = `${desc} ${name}`
     if( !this.flags.date) return `[${header}]`
 
     let dateString = date.toLocaleString()
-    if( this.flags.colorful ) dateString = chalk.gray(dateString)
+    if( this.flags.colorful ) dateString = dateChalk(dateString)
     return `${dateString} [${header}]`
   }
 
