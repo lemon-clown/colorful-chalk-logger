@@ -27,7 +27,7 @@ let defaultOptions = (()=> {
 
   if( program.logFlag ) {
     const negate_pattern = /^(no-)?(\S+)$/
-    const valid_flag = /^date|colorful$/
+    const valid_flag = /^date|colorful|inline$/
     let flags = program.logFlag
     for(let f of flags) {
       let matched = negate_pattern.exec(f)
