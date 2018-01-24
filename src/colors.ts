@@ -38,7 +38,7 @@ let brightColorKeywords = new Set([
 ])
 
 
-function colorToChalk(color: Color, fg: boolean) {
+export function colorToChalk(color: Color, fg: boolean) {
   if( typeof color === 'string' ) {
     if( colorKeywords.has(color) || brightColorKeywords.has(color) ) {
       if( !fg ) color = 'bg' + color[0].toUpperCase() + color.slice(1)
