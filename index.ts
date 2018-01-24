@@ -15,7 +15,7 @@ export {
 program
   .option('--log-level <level>', 'index output level.')
   .option('--log-flag <flag>', 'index option flag', collect, [])
-  .parse(process.argv)
+  .parseOptions(process.argv)
 
 
 let defaultOptions = (()=> {
