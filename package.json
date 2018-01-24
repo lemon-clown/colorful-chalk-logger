@@ -1,6 +1,6 @@
 {
   "name": "colorful-chalk-logger",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "a colorful logger, support control output(format | level) through command-line options.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
