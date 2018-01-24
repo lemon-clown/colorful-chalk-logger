@@ -9,6 +9,13 @@ npm install --save colorful-chalk-logger
 ```
 
 
+# cli-options
+* `--log-level <debug|verbose|info|warn|error|fatal>`: index global logger level.
+* `--log-flag <[no-](date|colorful)>`: the prefix `no-` represent negation.
+  > - `date`: whether to print date.
+  > - `colorful`: whether to print with colors.
+
+
 # Example
 ```typescript
 // demo/demo1.ts
@@ -70,3 +77,28 @@ logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
 ***![demo2.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo2.1.png)***
+
+```typescript
+// demo/demo3.ts
+import { ColorfulChalkLogger, ERROR } from '../index'
+import { Level } from '../src/level'
+import chalk from 'chalk'
+
+
+let logger = new ColorfulChalkLogger('demo', {
+  level: ERROR,     // the default value is DEBUG
+  date: false,      // the default value is false.
+  colorful: true,   // the default value is true.
+  dateChalk: 'green',
+  nameChalk: chalk.cyan.bind(chalk),
+})
+
+
+logger.debug('A', 'B', 'C')
+logger.verbose('A', 'B', 'C')
+logger.info('a', 'b', 'c')
+logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
+logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
+logger.fatal('1', '2', '3')
+```
+***![demo3.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo3.1.png)***
