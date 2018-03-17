@@ -74,7 +74,7 @@ export class Logger {
   public format(level: Level, header: string, message: string): string {
     if( this.flags.colorful ) {
       message = level.contentChalk.fg(message)
-      message = level.contentChalk.bg(message)
+      if( level.contentChalk.bg != null ) message = level.contentChalk.bg(message)
     }
     return `${header}: ${message}`
   }
@@ -85,7 +85,7 @@ export class Logger {
     let { name, dateChalk, nameChalk } = this
     if( this.flags.colorful ) {
       desc = level.headerChalk.fg(desc)
-      desc = level.headerChalk.bg(desc)
+      if( level.headerChalk.bg != null ) desc = level.headerChalk.bg(desc)
       name = nameChalk(name)
     }
     let header = `${desc} ${name}`
