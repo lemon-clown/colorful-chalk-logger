@@ -6,11 +6,12 @@ export type Color = string | [number, number, number]
 
 export class ColorfulChalk {
   readonly fg: Chalk
-  readonly bg: Chalk
+  readonly bg: Chalk | null
 
-  constructor(fg: Color, bg: Color) {
+  constructor(fg: Color, bg?: Color) {
     this.fg = colorToChalk(fg, true)
-    this.bg = colorToChalk(bg, false)
+    if( bg == null ) this.bg = null
+    else this.bg = colorToChalk(bg, false)
   }
 }
 

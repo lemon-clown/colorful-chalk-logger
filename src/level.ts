@@ -35,36 +35,36 @@ export class Level {
 export const DEBUG = new Level(
   'debug',
   'debug',
-  new ColorfulChalk('#BCBC36', 'black'),
-  new ColorfulChalk('#FCA416', 'black'),
+  new ColorfulChalk('#BCBC36'),
+  new ColorfulChalk('#FCA416'),
 )
 export const VERBOSE = new Level(
   'verbose',
   'verbose',
-  new ColorfulChalk('cyan', 'black'),
-  new ColorfulChalk('cyan', 'black'),
+  new ColorfulChalk('cyan'),
+  new ColorfulChalk('cyan'),
 )
 export const INFO = new Level(
   'info',
   'info ',
-  new ColorfulChalk('green', 'black'),
-  new ColorfulChalk('green', 'black'),
+  new ColorfulChalk('green'),
+  new ColorfulChalk('green'),
 )
 export const WARN = new Level(
   'warn',
   'warn ',
-  new ColorfulChalk('magenta', 'black'),
-  new ColorfulChalk('magenta', 'black'),
+  new ColorfulChalk('magenta'),
+  new ColorfulChalk('magenta'),
 )
 export const ERROR = new Level(
   'error',
   'error',
   new ColorfulChalk('black', 'red'),
-  new ColorfulChalk('red', 'black'),
+  new ColorfulChalk('red'),
 )
 export const FATAL = new Level(
   'fatal',
   'fatal',
   new ColorfulChalk('black', 'redBright'),
-  new ColorfulChalk('redBright', 'black'),
+  new ColorfulChalk('redBright'),
 )
