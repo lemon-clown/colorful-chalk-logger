@@ -3,4 +3,5 @@ src/
 demo/
 screenshots/
 tsconfig.json
-index.ts
+.gitignore
+.editorconfig
