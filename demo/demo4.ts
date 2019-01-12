@@ -1,13 +1,17 @@
+import path from 'path'
 import chalk from 'chalk'
-import { ColorfulChalkLogger, ERROR } from '../src'
+import { ColorfulChalkLogger, DEBUG } from '../src'
 
 
 let logger = new ColorfulChalkLogger('demo', {
-  level: ERROR,     // the default value is INFO
-  date: false,      // the default value is false.
-  colorful: true,   // the default value is true.
+  level: DEBUG,       // the default value is DEBUG
+  date: true,         // the default value is false.
+  inline: true,
+  colorful: false,    // the default value is true.
   dateChalk: 'green',
   nameChalk: chalk.cyan.bind(chalk),
+  filepath: path.resolve(__dirname, 'orz.log'),
+  encoding: 'utf-8',
 }, process.argv)
 
 

@@ -1,21 +1,19 @@
-import { ColorfulChalk } from './colors'
+import { ColorfulChalk } from './color'
 
 
 export class Level {
-  private static currentRank = 0    // rank increaser
+  private static currentRank = 0        // rank increase counter
   private static readonly levels = new Map<string, Level>()
 
-  public static getLevel(levelName: string) {
+  public static valueOf(levelName: string) {
     return Level.levels.get(levelName)
   }
 
-
-  readonly rank: number             // level's rank
-  readonly name: string             // level's name
-  readonly desc: string             // level's description
-
-  public headerChalk: ColorfulChalk
-  public contentChalk: ColorfulChalk
+  readonly rank: number                 // level's rank
+  readonly name: string                 // level's name
+  readonly desc: string                 // level's description
+  readonly headerChalk: ColorfulChalk
+  readonly contentChalk: ColorfulChalk
 
   constructor(name: string,
               desc: string,
@@ -35,36 +33,36 @@ export class Level {
 export const DEBUG = new Level(
   'debug',
   'debug',
-  new ColorfulChalk('#BCBC36'),
-  new ColorfulChalk('#FCA416'),
+  new ColorfulChalk('#BCA21F'),
+  new ColorfulChalk('#BCA21F'),
 )
 export const VERBOSE = new Level(
   'verbose',
   'verbose',
-  new ColorfulChalk('cyan'),
-  new ColorfulChalk('cyan'),
+  new ColorfulChalk('#72C9CC'),
+  new ColorfulChalk('#72C9CC'),
 )
 export const INFO = new Level(
   'info',
   'info ',
-  new ColorfulChalk('green'),
-  new ColorfulChalk('green'),
+  new ColorfulChalk('#00FF00'),
+  new ColorfulChalk('#00FF00'),
 )
 export const WARN = new Level(
   'warn',
   'warn ',
-  new ColorfulChalk('magenta'),
-  new ColorfulChalk('magenta'),
+  new ColorfulChalk('#FFA195'),
+  new ColorfulChalk('#FFA195'),
 )
 export const ERROR = new Level(
   'error',
   'error',
-  new ColorfulChalk('black', 'red'),
+  new ColorfulChalk('red'),
   new ColorfulChalk('red'),
 )
 export const FATAL = new Level(
   'fatal',
   'fatal',
-  new ColorfulChalk('black', 'redBright'),
+  new ColorfulChalk('black', 'red'),
   new ColorfulChalk('redBright'),
 )
