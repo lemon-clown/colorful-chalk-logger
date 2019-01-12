@@ -1,6 +1,7 @@
-import chalk, { Chalk } from 'chalk'
+import fs from 'fs-extra'
 import moment from 'moment'
 import { inspect } from 'util'
+import chalk, { Chalk } from 'chalk'
 import { Color, colorToChalk } from './color'
 import { DEBUG, VERBOSE, INFO, WARN, ERROR, FATAL, Level } from './level'
 
@@ -10,7 +11,9 @@ export interface Options {
   date?: boolean
   inline?: boolean
   colorful?: boolean
-  write?: (text: string) => boolean
+  encoding?: string
+  filepath?: string
+  write?: (text: string) => void
   dateChalk?: Chalk | Color
   nameChalk?: Chalk | Color
 }
@@ -21,7 +24,7 @@ export class Logger {
   private static get defaultDateChalk() { return chalk.gray.bind(chalk) }
   private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
 
-  private readonly write = (text: string) => process.stdout.write(text)
+  private readonly write = (text: string) => { process.stdout.write(text) }
 
   public readonly name: string
   public readonly level = Logger.defaultLevel
@@ -37,13 +40,17 @@ export class Logger {
     this.name = name
     if (!options) return
 
-    let { level, date, inline, colorful, write, dateChalk, nameChalk } = options
+    const { level, date, inline, colorful, write, filepath, encoding = 'utf-8', dateChalk, nameChalk } = options
 
     if (level) this.level = level
     if (date != null) this.flags.date = date
     if (inline != null) this.flags.inline = inline
     if (colorful != null) this.flags.colorful = colorful
+
     if (write != null) this.write = write
+    else if (filepath != null) {
+      this.write = (text: string) => fs.appendFileSync(filepath!, text, encoding)
+    }
 
     if( dateChalk ) {
       if( typeof dateChalk === 'function' ) this.dateChalk = dateChalk

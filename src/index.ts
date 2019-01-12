@@ -24,13 +24,16 @@ export class ColorfulChalkLogger extends Logger {
     const levelRegex: RegExp = /^--log-level\s*[=\s]\s*(\w+)$/
     const flagRegex: RegExp = /^--log-flag\s*[=\s]\s*(no-)?(date|inline|colorful)$/
     const outputRegex: RegExp = /^--log-output\s*[=\s]\s*((['"])[\s\S]+\2|\S+)$/
+    const encodingRegex: RegExp = /^--log-encoding\s*[=\s]\s*([\w\-.]+)$/
 
     // register into commander
     if (!registered) {
       registered = true
       program
-        .option('--log-level <level>', 'index logger\'s level.')
-        .option('--log-flag <option>', 'index logger\' option. (date,colorful)')
+        .option('--log-level <level>', 'specify logger\'s level.')
+        .option('--log-flag <option>', 'specify logger\' option. (date,colorful)')
+        .option('--log-output <filepath>', 'specify logger\' output path.')
+        .option('--log-encoding <encoding>', 'specify output file encoding.')
     }
 
     args.forEach(arg => {
@@ -44,6 +47,15 @@ export class ColorfulChalkLogger extends Logger {
       if (flagRegex.test(arg)) {
         let [, negative, flag] = flagRegex.exec(arg) as string[]
         options![flag] = !negative
+      }
+      if (encodingRegex.test(arg)) {
+        let [, encoding] = levelRegex.exec(arg) as string[]
+        options!.encoding = encoding
+      }
+      if (outputRegex.test(arg)) {
+        let [, filepath] = outputRegex.exec(arg) as string[]
+        if (/^['"]([\s\S]+)['"]$/.test(filepath)) filepath = /^['"]([\s\S]+)['"]$/.exec(filepath)![1]
+        options!.filepath = filepath
       }
     })
 
