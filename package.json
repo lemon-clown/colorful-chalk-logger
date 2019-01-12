@@ -5,21 +5,25 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "git@github.com:LittleClown/colorful-chalk-logger.git",
-  "author": "lemon clown",
+  "author": "lemon-clown",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc --declaration"
+  },
   "keywords": [
     "logger",
     "colorful",
-    "cli options",
-    "customizable"
+    "cli options"
   ],
-  "devDependencies": {
-    "ts-node": "^4.1.0",
-    "typescript": "^2.6.2"
-  },
+  "private": false,
   "dependencies": {
-    "@types/node": "^9.3.0",
-    "chalk": "^2.3.0",
-    "commander": "^2.13.0"
+    "@types/node": "^10.12.18",
+    "chalk": "^2.4.2",
+    "commander": "^2.19.0",
+    "moment": "^2.23.0"
+  },
+  "devDependencies": {
+    "ts-node": "^7.0.1",
+    "typescript": "^3.2.2"
   }
 }
