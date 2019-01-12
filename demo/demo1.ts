@@ -1,10 +1,11 @@
-import { ColorfulChalkLogger, ERROR } from '../index'
+import { ColorfulChalkLogger, ERROR } from '../src'
 
-let logger = new ColorfulChalkLogger('demo', {
-  level: ERROR,   // the default value is DEBUG
+
+const logger = new ColorfulChalkLogger('demo', {
+  level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.
-})
+}, process.argv)
 
 
 logger.debug('A', 'B', 'C')

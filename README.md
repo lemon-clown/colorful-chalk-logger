@@ -20,13 +20,14 @@ npm install --save colorful-chalk-logger
 # Example
 ```typescript
 // demo/demo1.ts
-import { ColorfulChalkLogger, ERROR } from '../index'
+import { ColorfulChalkLogger, ERROR } from '../src'
 
-let logger = new ColorfulChalkLogger('demo', {
-  level: ERROR,   // the default value is DEBUG
+
+const logger = new ColorfulChalkLogger('demo', {
+  level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.
-})
+}, process.argv)
 
 
 logger.debug('A', 'B', 'C')
@@ -41,16 +42,15 @@ logger.fatal('1', '2', '3')
 ## Custom output format:
 ```typescript
 // demo/demo2.ts
-import { ColorfulChalkLogger, ERROR } from '../index'
-import { Level } from '../src/level'
 import chalk from 'chalk'
+import { ColorfulChalkLogger, ERROR, Level } from '../src'
 
 
 let logger = new ColorfulChalkLogger('demo', {
-  level: ERROR,   // the default value is DEBUG
+  level: ERROR,   // the default value is INFO
   date: false,    // the default value is false.
   colorful: true, // the default value is true.
-})
+}, process.argv)
 
 
 logger.formatHeader = function (level: Level, date: Date): string {
@@ -58,7 +58,7 @@ logger.formatHeader = function (level: Level, date: Date): string {
   let { name } = this
   if( this.flags.colorful ) {
     desc = level.headerChalk.fg(desc)
-    desc = level.headerChalk.bg(desc)
+    if (level.headerChalk.bg != null) desc = level.headerChalk.bg(desc)
     name = chalk.gray(name)
   }
   let header = `${desc} ${name}`
@@ -81,18 +81,17 @@ logger.fatal('1', '2', '3')
 
 ```typescript
 // demo/demo3.ts
-import { ColorfulChalkLogger, ERROR } from '../index'
-import { Level } from '../src/level'
 import chalk from 'chalk'
+import { ColorfulChalkLogger, ERROR } from '../src'
 
 
 let logger = new ColorfulChalkLogger('demo', {
-  level: ERROR,     // the default value is DEBUG
+  level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.
   dateChalk: 'green',
   nameChalk: chalk.cyan.bind(chalk),
-})
+}, process.argv)
 
 
 logger.debug('A', 'B', 'C')

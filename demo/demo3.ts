@@ -1,15 +1,14 @@
-import { ColorfulChalkLogger, ERROR } from '../index'
-import { Level } from '../src/level'
 import chalk from 'chalk'
+import { ColorfulChalkLogger, ERROR } from '../src'
 
 
 let logger = new ColorfulChalkLogger('demo', {
-  level: ERROR,     // the default value is DEBUG
+  level: ERROR,     // the default value is INFO
   date: false,      // the default value is false.
   colorful: true,   // the default value is true.
   dateChalk: 'green',
   nameChalk: chalk.cyan.bind(chalk),
-})
+}, process.argv)
 
 
 logger.debug('A', 'B', 'C')
