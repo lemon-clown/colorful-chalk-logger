@@ -1,4 +1,4 @@
-import program from 'commander'
+import commander from 'commander'
 import { Level } from './level'
 import { Logger, Options } from './logger'
 export { Level, DEBUG, INFO, VERBOSE, WARN, ERROR, FATAL } from './level'
@@ -8,8 +8,26 @@ let registered: boolean = false
 
 
 export class ColorfulChalkLogger extends Logger {
+  public registerToCommander = ColorfulChalkLogger.registerToCommander
+
   constructor(name: string, options?: Options, args?: string[]) {
     super(name, ColorfulChalkLogger.generateOptions(options, args))
+  }
+
+  /**
+   * register to commander
+   * @param program
+   */
+  public static registerToCommander(program: commander.Command) {
+    // register into commander
+    if (!registered) {
+      registered = true
+      program
+        .option('--log-level <level>', 'specify logger\'s level.')
+        .option('--log-flag <option>', 'specify logger\' option. (date,colorful)')
+        .option('--log-output <filepath>', 'specify logger\' output path.')
+        .option('--log-encoding <encoding>', 'specify output file encoding.')
+    }
   }
 
   /**
@@ -25,16 +43,6 @@ export class ColorfulChalkLogger extends Logger {
     const flagRegex: RegExp = /^--log-flag\s*[=\s]\s*(no-)?(date|inline|colorful)$/
     const outputRegex: RegExp = /^--log-output\s*[=\s]\s*((['"])[\s\S]+\2|\S+)$/
     const encodingRegex: RegExp = /^--log-encoding\s*[=\s]\s*([\w\-.]+)$/
-
-    // register into commander
-    if (!registered) {
-      registered = true
-      program
-        .option('--log-level <level>', 'specify logger\'s level.')
-        .option('--log-flag <option>', 'specify logger\' option. (date,colorful)')
-        .option('--log-output <filepath>', 'specify logger\' output path.')
-        .option('--log-encoding <encoding>', 'specify output file encoding.')
-    }
 
     args.forEach(arg => {
       if (levelRegex.test(arg)) {
