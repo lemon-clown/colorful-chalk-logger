@@ -23,7 +23,7 @@ npm install --save colorful-chalk-logger
 # Example
 ```typescript
 // demo/demo1.ts
-import { ColorfulChalkLogger, ERROR } from '../src'
+import { ColorfulChalkLogger, ERROR } from 'colorful-chalk-logger'
 
 
 const logger = new ColorfulChalkLogger('demo', {
@@ -46,7 +46,7 @@ logger.fatal('1', '2', '3')
 ```typescript
 // demo/demo2.ts
 import chalk from 'chalk'
-import { ColorfulChalkLogger, ERROR, Level } from '../src'
+import { ColorfulChalkLogger, ERROR, Level } from 'colorful-chalk-logger'
 
 
 let logger = new ColorfulChalkLogger('demo', {
@@ -85,7 +85,7 @@ logger.fatal('1', '2', '3')
 ```typescript
 // demo/demo3.ts
 import chalk from 'chalk'
-import { ColorfulChalkLogger, ERROR } from '../src'
+import { ColorfulChalkLogger, ERROR } from 'colorful-chalk-logger'
 
 
 let logger = new ColorfulChalkLogger('demo', {
@@ -106,11 +106,12 @@ logger.fatal('1', '2', '3')
 ```
 ![demo3.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo3.1.png)
 
+## output to file
 ```typescript
 // demo/demo4.ts
 import path from 'path'
 import chalk from 'chalk'
-import { ColorfulChalkLogger, DEBUG } from '../src'
+import { ColorfulChalkLogger, DEBUG } from 'colorful-chalk-logger'
 
 
 let logger = new ColorfulChalkLogger('demo', {
@@ -133,3 +134,43 @@ logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
 ![demo4.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo4.1.png)
+
+
+## register to commander
+```typescript
+// demo/demo4.ts
+import chalk from 'chalk'
+import commander from 'Commander'
+import { ColorfulChalkLogger, ERROR } from '../src'
+
+
+let logger = new ColorfulChalkLogger('demo', {
+  level: ERROR,     // the default value is INFO
+  date: false,      // the default value is false.
+  colorful: true,   // the default value is true.
+  dateChalk: 'green',
+  nameChalk: chalk.cyan.bind(chalk),
+}, process.argv)
+
+
+commander
+  .version('v1.0.0')
+  .arguments('[orz]')
+
+// register logger option to commander
+logger.registerToCommander(commander)
+// or ColorfulChalkLogger.registerToCommander(commander)
+
+commander
+  .option('-e, --encoding <encoding>', 'specified <filepath>\'s encoding')
+  .parse(process.argv)
+
+
+logger.debug('A', 'B', 'C')
+logger.verbose('A', 'B', 'C')
+logger.info('a', 'b', 'c')
+logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
+logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
+logger.fatal('1', '2', '3')
+```
+![demo5.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo5.1.png)
