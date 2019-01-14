@@ -24,7 +24,7 @@ export class ColorfulChalkLogger extends Logger {
       registered = true
       program
         .option('--log-level <level>', 'specify logger\'s level.')
-        .option('--log-flag <option>', 'specify logger\' option. (date,colorful)')
+        .option('--log-flag <option>', 'specify logger\' option. [[no-]<date|colorful|inline>]', () => {}, [])
         .option('--log-output <filepath>', 'specify logger\' output path.')
         .option('--log-encoding <encoding>', 'specify output file encoding.')
     }
@@ -44,7 +44,20 @@ export class ColorfulChalkLogger extends Logger {
     const outputRegex: RegExp = /^--log-output\s*[=\s]\s*((['"])[\s\S]+\2|\S+)$/
     const encodingRegex: RegExp = /^--log-encoding\s*[=\s]\s*([\w\-.]+)$/
 
-    args.forEach(arg => {
+    const resolvedArgs: string[] = []
+    for (let i=0; i < args.length; ++i) {
+      if (/^--log-\w+$/.test(args[i].trim())) {
+        if (i + 1 < args.length && /^[^-]+/.test(args[i + 1].trim())) {
+          let arg: string = args[i].trim() + '=' + args[i + 1].trim()
+          resolvedArgs.push(arg)
+          ++i
+        }
+      } else if (/^--log-\w+\s*=/.test(args[i].trim())) {
+        resolvedArgs.push(args[i])
+      }
+    }
+
+    resolvedArgs.forEach(arg => {
       if (levelRegex.test(arg)) {
         let [, levelString] = levelRegex.exec(arg) as string[]
         let newLevel = Level.valueOf(levelString)
