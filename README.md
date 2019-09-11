@@ -44,7 +44,7 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-![demo1.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo1.1.png)
+![demo1.1.png](https://raw.githubusercontent.com/lemon-clown/colorful-chalk-logger/master/screenshots/demo1.1.png)
 
 ## Custom output format:
 ```typescript
@@ -84,7 +84,7 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-![demo2.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo2.1.png)
+![demo2.1.png](https://raw.githubusercontent.com/lemon-clown/colorful-chalk-logger/master/screenshots/demo2.1.png)
 
 ```typescript
 // demo/demo3.ts
@@ -108,7 +108,7 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-![demo3.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo3.1.png)
+![demo3.1.png](https://raw.githubusercontent.com/lemon-clown/colorful-chalk-logger/master/screenshots/demo3.1.png)
 
 ## output to file
 ```typescript
@@ -137,7 +137,7 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-![demo4.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo4.1.png)
+![demo4.1.png](https://raw.githubusercontent.com/lemon-clown/colorful-chalk-logger/master/screenshots/demo4.1.png)
 
 
 ## register to commander
@@ -177,7 +177,7 @@ logger.warn('X', 'Y', 'Z', { a: 1, b: 2})
 logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
-![demo5.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo5.1.png)
+![demo5.1.png](https://raw.githubusercontent.com/lemon-clown/colorful-chalk-logger/master/screenshots/demo5.1.png)
 
 
 ## string format
@@ -209,6 +209,6 @@ let logger2 = new ColorfulChalkLogger('demo', {
 logger2.verbose('user(<>)', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
 logger2.error('bad argument (<>). error({})', { username: 123 }, new Error('username is invalid'))
 ```
-![demo6.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo6.1.png)
+![demo6.1.png](https://raw.githubusercontent.com/lemon-clown/colorful-chalk-logger/master/screenshots/demo6.1.png)
 
 
