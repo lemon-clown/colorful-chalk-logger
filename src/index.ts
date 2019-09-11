@@ -82,4 +82,12 @@ export class ColorfulChalkLogger extends Logger {
   constructor(name: string, options?: Options, args?: string[]) {
     super(name, ColorfulChalkLogger.generateOptions(options, args))
   }
+
+  /**
+   * update logger's level
+   * @param level
+   */
+  public setLevel (level: Level) {
+    (this.level as any) = level
+  }
 }
