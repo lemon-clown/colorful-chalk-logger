@@ -1,5 +1,9 @@
 `colorful-chalk-logger` is a colorful logger tool based on [chalk](https://github.com/chalk/chalk)(so you can use a lot of colors) and [commander](https://github.com/tj/commander.js)(so you can use command line parameters to customized the logger's behavior).
 
+
+[![npm version](https://img.shields.io/npm/v/colorful-chalk-logger.svg)](https://www.npmjs.com/package/colorful-chalk-logger)
+
+
 # Install
 you can use `colorful-chalk-logger` either in `typescript` or `javascript`.
 ```shell
@@ -138,7 +142,7 @@ logger.fatal('1', '2', '3')
 
 ## register to commander
 ```typescript
-// demo/demo4.ts
+// demo/demo5.ts
 import chalk from 'chalk'
 import commander from 'Commander'
 import { ColorfulChalkLogger, ERROR } from '../src'
@@ -174,3 +178,37 @@ logger.error('x', 'y', 'z', { c: { a: 'hello' }, b: { d: 'world' } })
 logger.fatal('1', '2', '3')
 ```
 ![demo5.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo5.1.png)
+
+
+## string format
+```typescript
+// demo/demo6.ts
+import { ColorfulChalkLogger, DEBUG } from '../src'
+
+
+let logger = new ColorfulChalkLogger('demo', {
+  level: DEBUG,
+  date: true,
+  colorful: true,
+  inline: true,
+}, process.argv)
+
+
+logger.verbose('user({})', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
+logger.error('bad argument ({}). error({})', { username: 123 }, new Error('username is invalid'))
+
+
+let logger2 = new ColorfulChalkLogger('demo', {
+  level: DEBUG,
+  date: true,
+  colorful: true,
+  inline: true,
+  placeholderRegex: /(?<!\\)\<\>/g  // change placeholder of string format
+}, process.argv)
+
+logger2.verbose('user(<>)', { username: 'lemon-clown', avatar: 'https://avatars0.githubusercontent.com/u/42513619?s=400&u=d878f4532bb5749979e18f3696b8985b90e9f78b&v=4' })
+logger2.error('bad argument (<>). error({})', { username: 123 }, new Error('username is invalid'))
+```
+![demo6.1.png](https://raw.githubusercontent.com/LittleClown/colorful-chalk-logger/master/screenshots/demo6.1.png)
+
+
