@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import commander from 'Commander'
+import commander from 'commander'
 import { ColorfulChalkLogger, ERROR } from '../src'
 
 

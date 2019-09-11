@@ -8,12 +8,6 @@ let registered: boolean = false
 
 
 export class ColorfulChalkLogger extends Logger {
-  public registerToCommander = ColorfulChalkLogger.registerToCommander
-
-  constructor(name: string, options?: Options, args?: string[]) {
-    super(name, ColorfulChalkLogger.generateOptions(options, args))
-  }
-
   /**
    * register to commander
    * @param program
@@ -81,5 +75,11 @@ export class ColorfulChalkLogger extends Logger {
     })
 
     return options
+  }
+
+  public readonly registerToCommander = ColorfulChalkLogger.registerToCommander
+
+  constructor(name: string, options?: Options, args?: string[]) {
+    super(name, ColorfulChalkLogger.generateOptions(options, args))
   }
 }

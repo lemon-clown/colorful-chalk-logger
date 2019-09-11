@@ -7,6 +7,7 @@ import { DEBUG, VERBOSE, INFO, WARN, ERROR, FATAL, Level } from './level'
 
 
 export interface Options {
+  placeholderRegex?: RegExp
   level?: Level
   date?: boolean
   inline?: boolean
@@ -25,43 +26,57 @@ export class Logger {
   private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
 
   private readonly write = (text: string) => { process.stdout.write(text) }
-
   public readonly name: string
   public readonly level = Logger.defaultLevel
   public readonly dateChalk = Logger.defaultDateChalk
   public readonly nameChalk = Logger.defaultNameChalk
+  private readonly placeholderRegex: RegExp = /(?<!\\)\{\}/g
   public readonly flags = {
     date: false,
     inline: false,
     colorful: true,
   }
 
-  constructor(name: string, options?: Options) {
+  public constructor(name: string, options?: Options) {
     this.name = name
     if (!options) return
 
-    const { level, date, inline, colorful, write, filepath, encoding = 'utf-8', dateChalk, nameChalk } = options
+    const { level,
+      date,
+      inline,
+      colorful,
+      write,
+      filepath,
+      encoding = 'utf-8',
+      dateChalk,
+      nameChalk,
+      placeholderRegex
+    } = options
 
     if (level) this.level = level
     if (date != null) this.flags.date = date
     if (inline != null) this.flags.inline = inline
     if (colorful != null) this.flags.colorful = colorful
+    if (placeholderRegex != null) {
+      let flags: string = this.placeholderRegex.flags
+      if (!flags.includes('g')) flags += 'g'
+      this.placeholderRegex = new RegExp(placeholderRegex.source, `${ flags }`)
+    }
 
     if (write != null) this.write = write
     else if (filepath != null) {
       this.write = (text: string) => fs.appendFileSync(filepath!, text, encoding)
     }
 
-    if( dateChalk ) {
-      if( typeof dateChalk === 'function' ) this.dateChalk = dateChalk
+    if (dateChalk) {
+      if (typeof dateChalk === 'function') this.dateChalk = dateChalk as any
       else this.dateChalk = colorToChalk(dateChalk, true)
     }
-    if( nameChalk ) {
-      if( typeof nameChalk === 'function' ) this.nameChalk = nameChalk
+    if (nameChalk) {
+      if (typeof nameChalk === 'function') this.nameChalk = nameChalk as any
       else this.nameChalk = colorToChalk(nameChalk, true)
     }
   }
-
 
   // format a log record.
   public format(level: Level, header: string, message: string): string {
@@ -69,7 +84,7 @@ export class Logger {
       message = level.contentChalk.fg(message)
       if (level.contentChalk.bg != null) message = level.contentChalk.bg(message)
     }
-    return `${header}: ${message}`
+    return `${ header }: ${ message }`
   }
 
   // format a log record's header.
@@ -81,12 +96,12 @@ export class Logger {
       if (level.headerChalk.bg != null) desc = level.headerChalk.bg(desc)
       name = nameChalk(name)
     }
-    let header = `${desc} ${name}`
-    if (!this.flags.date) return `[${header}]`
+    let header = `${ desc } ${ name }`
+    if (!this.flags.date) return `[${ header }]`
 
-    let dateString = moment(date).format('YYYY-MM-DD hh:mm:ss')
+    let dateString = moment(date).format('YYYY-MM-DD HH:mm:ss')
     if (this.flags.colorful) dateString = dateChalk(dateString)
-    return `${dateString} [${header}]`
+    return `${ dateString } [${ header }]`
   }
 
   // format a log record part message according its type.
@@ -111,35 +126,36 @@ export class Logger {
         }
     }
     if (inline) text = text.replace(/\n\s*/g, ' ')
-    if (!inline && text.indexOf('\n') > -1) text += '\n'
-    else text += ' '
     return text
   }
 
+  public debug(messageFormat: string, ...messages: any[]) { this.log(DEBUG, messageFormat, ...messages) }
+  public verbose(messageFormat: string, ...messages: any[]) { this.log(VERBOSE, messageFormat, ...messages) }
+  public info(messageFormat: string, ...messages: any[]) { this.log(INFO, messageFormat, ...messages) }
+  public warn(messageFormat: string, ...messages: any[]) { this.log(WARN, messageFormat, ...messages) }
+  public error(messageFormat: string, ...messages: any[]) { this.log(ERROR, messageFormat, ...messages) }
+  public fatal(messageFormat: string, ...messages: any[]) { this.log(FATAL, messageFormat, ...messages) }
+
   // write a log record.
-  private log(level: Level, ...messages: any[]) {
+  private log(level: Level, messageFormat: string, ...messages: any[]) {
     if (!level || level.rank < this.level.rank) return
     let header = this.formatHeader(level, new Date())
     let newline = false
-    let message = messages
-      .map(message => {
-        if (message == null) message = '' + message
-        let text = this.formatSingleMessage(message)
+    let items: string[] = messages
+      .map(msg => {
+        if (msg == null) msg = '' + msg
+        let text = this.formatSingleMessage(msg)
         if (text.endsWith('\n')) {
           text = '\n' + text
           newline = true
         }
         return text
       })
-      .join('')
+
+    let idx: number = 0
+    let message: string = messageFormat.replace(this.placeholderRegex, m => items[idx++] || m)
+    if (idx < items.length) message += ' ' + items.slice(idx).join(' ')
     if (!newline && !message.endsWith('\n')) message += '\n'
     this.write(this.format(level, header, message))
   }
-
-  public debug(...messages: any[]) { this.log(DEBUG, ...messages) }
-  public verbose(...messages: any[]) { this.log(VERBOSE, ...messages) }
-  public info(...messages: any[]) { this.log(INFO, ...messages) }
-  public warn(...messages: any[]) { this.log(WARN, ...messages) }
-  public error(...messages: any[]) { this.log(ERROR, ...messages) }
-  public fatal(...messages: any[]) { this.log(FATAL, ...messages) }
 }
