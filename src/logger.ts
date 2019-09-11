@@ -41,7 +41,8 @@ export class Logger {
     this.name = name
     if (!options) return
 
-    const { level,
+    const {
+      level,
       date,
       inline,
       colorful,

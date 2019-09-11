@@ -3,7 +3,7 @@ import { ColorfulChalk } from './color'
 
 export class Level {
   public static valueOf(levelName: string) {
-    return Level.levels.get(levelName)
+    return Level.levels.get(levelName.toLowerCase())
   }
 
   private static currentRank = 0        // rank increase counter
