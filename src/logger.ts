@@ -26,7 +26,7 @@ export class Logger {
   private static get defaultNameChalk() { return chalk.gray.bind(chalk) }
 
   private readonly write = (text: string) => { process.stdout.write(text) }
-  public readonly name: string
+  public name: string
   public readonly level = Logger.defaultLevel
   public readonly dateChalk = Logger.defaultDateChalk
   public readonly nameChalk = Logger.defaultNameChalk
@@ -97,7 +97,7 @@ export class Logger {
       if (level.headerChalk.bg != null) desc = level.headerChalk.bg(desc)
       name = nameChalk(name)
     }
-    let header = `${ desc } ${ name }`
+    const header = name.length > 0 ? `${ desc } ${ name }` : desc
     if (!this.flags.date) return `[${ header }]`
 
     let dateString = moment(date).format('YYYY-MM-DD HH:mm:ss')

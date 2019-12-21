@@ -18,7 +18,7 @@ export class ColorfulChalkLogger extends Logger {
       registered = true
       program
         .option('--log-level <level>', 'specify logger\'s level.')
-        .option('--log-flag <option>', 'specify logger\' option. [[no-]<date|colorful|inline>]', () => {}, [])
+        .option('--log-flag <option>', 'specify logger\' option. [[no-]<date|colorful|inline>]', () => { }, [])
         .option('--log-output <filepath>', 'specify logger\' output path.')
         .option('--log-encoding <encoding>', 'specify output file encoding.')
     }
@@ -39,7 +39,7 @@ export class ColorfulChalkLogger extends Logger {
     const encodingRegex: RegExp = /^--log-encoding\s*[=\s]\s*([\w\-.]+)$/
 
     const resolvedArgs: string[] = []
-    for (let i=0; i < args.length; ++i) {
+    for (let i = 0; i < args.length; ++i) {
       if (/^--log-\w+$/.test(args[i].trim())) {
         if (i + 1 < args.length && /^[^-]+/.test(args[i + 1].trim())) {
           let arg: string = args[i].trim() + '=' + args[i + 1].trim()
@@ -87,7 +87,15 @@ export class ColorfulChalkLogger extends Logger {
    * update logger's level
    * @param level
    */
-  public setLevel (level: Level) {
+  public setLevel(level: Level) {
     (this.level as any) = level
+  }
+
+  /**
+   * update logger's name
+   * @param name
+   */
+  public setName(name: string) {
+    this.name = name
   }
 }
