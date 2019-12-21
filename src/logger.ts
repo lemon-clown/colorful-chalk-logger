@@ -92,16 +92,17 @@ export class Logger {
   public formatHeader(level: Level, date: Date): string {
     let { desc } = level
     let { name, dateChalk, nameChalk } = this
+    let chalkedName = name
     if (this.flags.colorful) {
       desc = level.headerChalk.fg(desc)
       if (level.headerChalk.bg != null) desc = level.headerChalk.bg(desc)
-      name = nameChalk(name)
+      chalkedName = nameChalk(name as any)
     }
-    const header = name.length > 0 ? `${ desc } ${ name }` : desc
+    const header = name.length > 0 ? `${ desc } ${ chalkedName }` : desc
     if (!this.flags.date) return `[${ header }]`
 
     let dateString = moment(date).format('YYYY-MM-DD HH:mm:ss')
-    if (this.flags.colorful) dateString = dateChalk(dateString)
+    if (this.flags.colorful) dateString = dateChalk(dateString as any)
     return `${ dateString } [${ header }]`
   }
 
