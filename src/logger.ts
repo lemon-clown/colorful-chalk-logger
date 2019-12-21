@@ -8,6 +8,7 @@ import { DEBUG, VERBOSE, INFO, WARN, ERROR, FATAL, Level } from './level'
 
 export interface Options {
   placeholderRegex?: RegExp
+  name?: string
   level?: Level
   date?: boolean
   inline?: boolean
@@ -41,6 +42,7 @@ export class Logger {
     this.name = name
     if (!options) return
 
+    if (options.name != null) this.name = options.name
     const {
       level,
       date,

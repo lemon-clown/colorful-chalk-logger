@@ -18,6 +18,7 @@ export class ColorfulChalkLogger extends Logger {
       registered = true
       program
         .option('--log-level <level>', 'specify logger\'s level.')
+        .option('--log-name <name>', 'specify logger\'s name.')
         .option('--log-flag <option>', 'specify logger\' option. [[no-]<date|colorful|inline>]', () => { }, [])
         .option('--log-output <filepath>', 'specify logger\' output path.')
         .option('--log-encoding <encoding>', 'specify output file encoding.')
@@ -34,6 +35,7 @@ export class ColorfulChalkLogger extends Logger {
     if (args == null) return options
 
     const levelRegex: RegExp = /^--log-level\s*[=\s]\s*(\w+)$/
+    const nameRegex: RegExp = /^--log-name\s*[=\s]\s*(\w+)$/
     const flagRegex: RegExp = /^--log-flag\s*[=\s]\s*(no-)?(date|inline|colorful)$/
     const outputRegex: RegExp = /^--log-output\s*[=\s]\s*((['"])[\s\S]+\2|\S+)$/
     const encodingRegex: RegExp = /^--log-encoding\s*[=\s]\s*([\w\-.]+)$/
@@ -71,6 +73,11 @@ export class ColorfulChalkLogger extends Logger {
         let [, filepath] = outputRegex.exec(arg) as string[]
         if (/^['"]([\s\S]+)['"]$/.test(filepath)) filepath = /^['"]([\s\S]+)['"]$/.exec(filepath)![1]
         options!.filepath = filepath
+      }
+      if (nameRegex.test(arg)) {
+        let [, nameString] = nameRegex.exec(arg) as string[]
+        if (nameString == null) return
+        options!.name = nameString
       }
     })
 
