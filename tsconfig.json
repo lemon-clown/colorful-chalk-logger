@@ -1,25 +1,39 @@
 {
   "compilerOptions": {
-    "lib": [ "es2015" ],
-    "target": "es2015",
-    "outDir": "dist/",
-    "module": "commonjs",
-    "noImplicitReturns": false,
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "jsx": "react",
+    "strict": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true,
-    "removeComments": true,
-    "noUnusedLocals": false,
-    "esModuleInterop": true,
+    "noImplicitReturns": false,
+    "alwaysStrict": true,
     "suppressImplicitAnyIndexErrors": true,
+    "newLine": "LF",
+    "noEmitOnError": true,
+    "removeComments": false,
+    "declaration": true,
     "sourceMap": false,
-    "pretty": false
+    "pretty": false,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "downlevelIteration": true,
+    "lib": [
+      "es2015",
+      "dom"
+    ],
+    "outDir": "lib",
+    "module": "commonjs",
+    "target": "es6",
+    "rootDir": "."
   },
   "include": [
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "dist/",
-    "node_modules/"
+    "src",
+    "test"
   ]
 }

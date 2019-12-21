@@ -1,6 +1,11 @@
 {
   "cSpell.words": [
+    "Interop",
+    "downlevel",
+    "editorconfig",
     "filepath",
+    "postbuild",
+    "tsbuildinfo",
     "verbo"
   ]
 }

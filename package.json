@@ -2,19 +2,28 @@
   "name": "colorful-chalk-logger",
   "version": "0.4.1",
   "description": "a colorful logger, support control output(format | level) through command-line options.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "repository": "git@github.com:lemon-clown/colorful-chalk-logger.git",
   "author": "lemon-clown",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --declaration",
+    "build": "rimraf lib/ && tsc -b tsconfig.json",
+    "postbuild": "rimraf lib/package.json lib/test && mv lib/src/* lib && rimraf lib/src/ lib/**/*.tsbuildinfo",
     "prepublishOnly": "yarn build"
   },
   "keywords": [
     "logger",
     "colorful",
     "cli options"
+  ],
+  "files": [
+    "lib/",
+    ".editorconfig",
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "tsconfig.json"
   ],
   "private": false,
   "dependencies": {
